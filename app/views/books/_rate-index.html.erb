@@ -1,5 +1,6 @@
 <td id="stars-rate<%= book.id %>"></td>
 <script>
+$("#stars-rate<%= book.id %>").empty();
 $("#stars-rate<%= book.id %>").raty({
   starOff:  '<%= asset_path('star-off.png') %>',
   starOn : '<%= asset_path('star-on.png') %>',

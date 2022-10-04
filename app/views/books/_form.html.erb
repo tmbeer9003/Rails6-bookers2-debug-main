@@ -17,13 +17,14 @@
   <% end %>
 
   <script>
+  $('#stars').empty();
   $("#stars").raty({
     starOff:  '<%= asset_path('star-off.png') %>',
     starOn : '<%= asset_path('star-on.png') %>',
     starHalf: '<%= asset_path('star-half.png') %>',
     scoreName: 'book[evaluation]',
     half: true,
-    <% if book.user == current_user %>
+    <% if book.id != nil %>
       score: <%= book.evaluation %>,
       readOnly: true,
     <% end %>

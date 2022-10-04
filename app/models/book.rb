@@ -20,4 +20,8 @@ class Book < ApplicationRecord
       @book = Book.where("title like ?", "%#{word}%")
     end
   end
+
+  scope :sorted_recent, -> { order(created_at: :asc) }
+  scope :sorted_evaluation, -> { order(evaluation: :desc) }
+
 end

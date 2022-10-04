@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   end
   
   get 'search' => 'searches#search'
+  
+  get 'books/sorted_recent' => 'books#index'
+  get 'books/sorted_evaluation' => 'books#index'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
