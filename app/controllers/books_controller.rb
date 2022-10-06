@@ -8,20 +8,16 @@ class BooksController < ApplicationController
   end
 
   def index
-    if params[:sorted_recent]
-      @books = Book.sorted_recent
-    elsif params[:sorted_evaluation]
-      @books = Book.sorted_evaluation
-    else 
-      @books = Book.all
-    end
+    @books = Book.all.order(params[:sort])
     @book = Book.new
   end
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    tag_list = params[:book][:tag_name].split(',')
     if @book.save
+      @book.save_tag(tag_list)
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
@@ -31,6 +27,7 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    @book_tag = @book.book_tags.pluck(:tag_name).join(',')
     unless @book.user == current_user
       redirect_to books_path
     end
@@ -38,7 +35,9 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
+    tag_list = params[:book][:tag_name].split(',')
     if @book.update(book_params)
+      @book.save_tag(tag_list)
       redirect_to book_path(@book), notice: "You have updated book successfully."
     else
       render "edit"
@@ -47,7 +46,7 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
-    @book.delete
+    @book.destroy
     redirect_to books_path
   end
 

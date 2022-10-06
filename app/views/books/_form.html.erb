@@ -1,4 +1,4 @@
-<%= form_with model:book,local:true do |f| %>
+<%= form_with model: book, local:true do |f| %>
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control book_title' %>
@@ -6,6 +6,14 @@
   <div class="form-group">
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :tag %>
+    <% if book.id == nil %> 
+      <%= f.text_field :tag_name, placeholder: ",で区切って入力", class: 'form-control book_tag_name' %>
+    <% else %>
+      <%= f.text_field :tag_name, placeholder: ",で区切って入力", value: book_tag, class: 'form-control book_tag_name' %>
+    <% end %> 
   </div>
   <div class="form-group", id="stars">
     <%= f.label :rate %>

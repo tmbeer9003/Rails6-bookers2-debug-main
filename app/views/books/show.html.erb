@@ -17,6 +17,12 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
+          <td>
+            <% @book.book_tags.map(&:tag_name).each do |book_tag| %>
+            <%= link_to book_tag,search_path(word: book_tag) %>
+            <% unless book_tag == @book.book_tags.map(&:tag_name).last %>,<% end %>
+          <% end %>
+        </td>
           <td id="favorite-button_<%= @book.id %>">
             <%= render 'favorites/favorite-btn', book: @book %>
           </td>
