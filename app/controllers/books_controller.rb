@@ -8,7 +8,16 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all.order(params[:sort])
+    if params[:sort] == nil
+      to = Time.current.at_end_of_day
+      from = to - 1.week
+      @books = Book.includes(:favorites).sort {
+        |a,b| b.favorites.where(created_at: from..to).size <=>
+        a.favorites.where(created_at: from..to).size
+        }
+    else
+      @books = Book.all.order(params[:sort])
+    end
     @book = Book.new
   end
 
