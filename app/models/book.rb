@@ -6,6 +6,7 @@ class Book < ApplicationRecord
   has_many :book_tags, through: :book_tag_relationships
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+  is_impressionable
 
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
